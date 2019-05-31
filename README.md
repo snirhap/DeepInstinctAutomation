@@ -1,5 +1,3 @@
-DeepInstinct - Code Challenge
-
 An automation program that gets a path to a report file in the following format:
 
 [Date Time] [Guard #X] [Action(begin shift\falls asleep\wakes up)]
@@ -8,7 +6,7 @@ The program finds which guard is most likely to fall asleep (the guard that has 
 
 In order to execute the whole test set, run this command:
 
-python -m unittest main.py
+> python -m unittest main.py
 
 
 A brief explenation regarding my solution:
