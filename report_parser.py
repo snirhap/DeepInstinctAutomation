@@ -8,7 +8,7 @@ class ReportParser:
         self.results = {}
         self.current_guard = ''
 
-    def print_most_sleepy_guard(self):
+    def get_most_sleepy_guard(self):
         self.calculate_guards_sleeping_time()
         max_total_sleeptime = 0
         most_sleepy_guard = ''
