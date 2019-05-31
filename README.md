@@ -1,6 +1,6 @@
 # DeepInstinct - Code Challenge
 
-An automation program that gets a path to a report file in the following format:
+An automation program that gets a path to a report file where each line is in the following format:
 
 **[Date] [Time] [Guard #X] [Action (begin shift\falls asleep\wakes up)]**
 
