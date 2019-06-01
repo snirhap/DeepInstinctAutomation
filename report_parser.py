@@ -1,5 +1,6 @@
 import re
 import copy
+from datetime import datetime
 
 
 class ReportParser:
@@ -36,6 +37,17 @@ class ReportParser:
         with open(self.report_file_path, 'r') as report_file:
             for line in report_file.readlines():
                 parsed_line = self.parse_line(line)
+
+                # check valid time flow
+                if len(previous_instruction) > 0:
+                    cur_time = '{} {}'.format(parsed_line[0], parsed_line[1])
+                    cur_time = datetime.strptime(cur_time, '%Y-%m-%d %H:%M')
+
+                    prev_time = '{} {}'.format(previous_instruction[0], previous_instruction[1])
+                    prev_time = datetime.strptime(prev_time, '%Y-%m-%d %H:%M')
+
+                    if prev_time > cur_time:
+                        raise InvalidTimeFlowException('Invalid timeflow. There is no chronological order between the lines')
 
                 if 'begins shift' in parsed_line:
                     if 'falls asleep' not in previous_instruction:  # must be a waking up after falling asleep
@@ -110,5 +122,9 @@ class GuardNotAwakeException(Exception):
 
 
 class FallAsleepException(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
+class InvalidTimeFlowException(Exception):
     def __init__(self, message):
         super().__init__(message)

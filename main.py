@@ -1,6 +1,5 @@
-from report_parser import ReportParser, AwakeWithoutAsleepException, FallAsleepException, GuardNotAwakeException
+from report_parser import ReportParser, AwakeWithoutAsleepException, FallAsleepException, GuardNotAwakeException, InvalidTimeFlowException
 import os.path
-from delayed_assert import expect, assert_expectations
 import unittest
 
 
@@ -39,4 +38,16 @@ class Tests(unittest.TestCase):
     def test_6(self):
         rp = ReportParser('{}{}'.format(os.path.dirname(__file__), '/reports/report6'))
         with self.assertRaises(GuardNotAwakeException):
+            rp.get_most_sleepy_guard()
+
+    # Test 7 - another classic run, this time guard #99 is most sleepy one
+    def test_7(self):
+        rp = ReportParser('{}{}'.format(os.path.dirname(__file__), '/reports/report7'))
+        result = rp.get_most_sleepy_guard()
+        assert result == 'Guard #99 is most likely to be asleep in 00:36', 'Should be: Guard #99 is most likely to be asleep in 00:36'
+
+    # Test 8 - Invalid time flow
+    def test_8(self):
+        rp = ReportParser('{}{}'.format(os.path.dirname(__file__), '/reports/report8'))
+        with self.assertRaises(InvalidTimeFlowException):
             rp.get_most_sleepy_guard()
